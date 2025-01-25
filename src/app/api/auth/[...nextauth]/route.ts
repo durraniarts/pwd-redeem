@@ -21,11 +21,10 @@ export const authOptions: AuthOptions = {
       name: "User Login",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "email" },
-        username: { label: "Username", type: "text", placeholder: "xyz" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials.password) {
+        if (!credentials?.email || !credentials.password) {
           throw new Error("Please enter username and password");
         }
 
@@ -55,7 +54,7 @@ export const authOptions: AuthOptions = {
         return {
           //   id: user.userId.toString(),
           id: "1",
-          name: credentials.username,
+          name: credentials.email,
           //   role: user.role,
           email: credentials.email,
         };
