@@ -9,7 +9,6 @@ import Image from "next/image";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useSignUp } from "@clerk/nextjs";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -21,7 +20,6 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   // const { isLoaded, signIn, setActive } = useSignIn();
-  const { signUp, setActive } = useSignUp();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,17 +32,7 @@ export function LoginForm({
     },
   });
 
-  const handleOAuthLogin = async () => {
-    try {
-      const res = await signUp?.create({
-        strategy: "oauth_google",
-        redirectUrl: "/",
-      });
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const handleOAuthLogin = async () => {};
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden">

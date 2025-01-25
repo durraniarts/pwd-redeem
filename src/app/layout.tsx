@@ -4,15 +4,6 @@ import "./globals.css";
 import { NextAuthSessionProvider } from "@/context/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import {
-  ClerkProvider,
-  SignIn,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,37 +25,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <header className="w-full h-14 border-b flex justify-end items-center px-16 py-6">
-            <SignedOut>
-              <Link href={"/sign-in"}>SignIn</Link>
-              {/* <SignInButton /> */}
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          <main className="flex flex-col justify-center min-h-svh items-center">
-            <SignedOut>
-              <SignIn
-                routing="hash"
-                signUpUrl="/sign-up"
-                signInUrl="/sign-in"
-              />
-            </SignedOut>
-            <SignedIn>
-              {/* <NextAuthSessionProvider session={session}> */}
-              {children}
-            </SignedIn>
-          </main>
-          {/* </NextAuthSessionProvider> */}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <NextAuthSessionProvider session={session}>
+          {children}
+        </NextAuthSessionProvider>
+      </body>
+    </html>
   );
 }
