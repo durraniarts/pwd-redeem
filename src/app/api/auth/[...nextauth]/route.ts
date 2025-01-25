@@ -30,32 +30,9 @@ export const authOptions: AuthOptions = {
 
         const encryptedPassword = passwordEncryption(credentials.password);
 
-        // const users = await db
-        //   .select()
-        //   .from(cashbackengineAdminUsers)
-        //   .where(
-        //     and(
-        //       eq(cashbackengineAdminUsers.username, credentials.username),
-        //       eq(cashbackengineAdminUsers.password, encryptedPassword)
-        //     )
-        //   )
-        //   .limit(1);
-
-        // if (users.length === 0) {
-        //   throw new Error("Invalid username or password");
-        // }
-
-        // const user = users[0];
-
-        // if (user.status === "inactive") {
-        //   throw new Error("Sorry, your account is deactivated");
-        // }
-
         return {
-          //   id: user.userId.toString(),
           id: "1",
           name: credentials.email,
-          //   role: user.role,
           email: credentials.email,
         };
       },
@@ -73,7 +50,6 @@ export const authOptions: AuthOptions = {
       if (user) {
         newToken.id = user.id;
         newToken.name = user.name;
-        // newToken.role = user.role;
         newToken.email = user.email;
       }
       return newToken;
